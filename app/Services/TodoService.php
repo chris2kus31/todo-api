@@ -6,9 +6,15 @@ use App\Dto\CreateTodoDto;
 use App\Dto\UpdateTodoDto;
 use App\Models\Todo;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Spatie\LaravelData\Optional;
 
 class TodoService
 {
+    public function show(int $id): Todo
+    {
+        return Todo::findOrFail($id);
+    }
+
     public function store(CreateTodoDto $createTodoDto): Todo
     {
         $todo = new Todo;
@@ -25,11 +31,11 @@ class TodoService
     {
         $todo = Todo::findOrFail($id);
 
-        if ($updateTodoDto->name) {
+        if (! $updateTodoDto->name instanceof Optional) {
             $todo->name = $updateTodoDto->name;
         }
 
-        if ($updateTodoDto->status !== null) {
+        if (! $updateTodoDto->status instanceof Optional) {
             $todo->status = $updateTodoDto->status;
         }
 

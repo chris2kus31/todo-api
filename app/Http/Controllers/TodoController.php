@@ -24,9 +24,9 @@ class TodoController extends Controller
         return $this->todoService->store($createTodoDto);
     }
 
-    public function show(string $id)
+    public function show(int $id): Todo
     {
-        //
+        return $this->todoService->show($id);
     }
 
     public function update(UpdateTodoDto $updateTodoDto, int $id): Todo
