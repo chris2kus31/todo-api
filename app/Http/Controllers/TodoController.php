@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Dto\CreateTodoDto;
+use App\Dto\TodoAnalyticsDto;
+use App\Dto\TodoAnalyticsResponseDto;
 use App\Dto\UpdateTodoDto;
 use App\Models\Todo;
 use App\Services\TodoService;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
@@ -49,8 +50,8 @@ class TodoController extends Controller
         }
     }
 
-    public function analytics(Request $request)
+    public function analytics(TodoAnalyticsDto $analyticsDto): TodoAnalyticsResponseDto
     {
-        //
+        return $this->todoService->analytics($analyticsDto->from, $analyticsDto->to);
     }
 }

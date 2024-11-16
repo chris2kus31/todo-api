@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use App\Dto\CreateTodoDto;
+use App\Dto\TodoAnalyticsResponseDto;
 use App\Dto\UpdateTodoDto;
 use App\Enums\TodoStatus;
 use App\Models\Todo;
+use DateTime;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Spatie\LaravelData\Optional;
 
@@ -65,5 +67,13 @@ class TodoService
         $todo->delete();
 
         return true;
+    }
+
+    public function analytics(DateTime $from, DateTime $to): TodoAnalyticsResponseDto
+    {
+        return new TodoAnalyticsResponseDto(
+            created: Todo::countByDtRange($from, $to),
+            completed: Todo::doneCountByDtRange($from, $to),
+        );
     }
 }

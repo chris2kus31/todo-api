@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\TodoStatus;
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 class Todo extends Model
@@ -41,4 +42,24 @@ class Todo extends Model
     protected $fillable = [
         'name',
     ];
+
+    public static function countByDtRange(
+        DateTime $from,
+        DateTime $to,
+    ): int {
+        return self::whereBetween('created_at', [
+            $from->format('Y-m-d'),
+            $to->format('Y-m-d'),
+        ])->count();
+    }
+
+    public static function doneCountByDtRange(
+        DateTime $from,
+        DateTime $to,
+    ): int {
+        return self::whereBetween('completed_at', [
+            $from->format('Y-m-d'),
+            $to->format('Y-m-d'),
+        ])->count();
+    }
 }
