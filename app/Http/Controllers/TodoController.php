@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Dto\CreateTodoDto;
 use App\Dto\TodoAnalyticsDto;
 use App\Dto\TodoAnalyticsResponseDto;
+use App\Dto\TodoListRequestDto;
 use App\Dto\UpdateTodoDto;
 use App\Models\Todo;
 use App\Services\TodoService;
+use Illuminate\Contracts\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
@@ -17,9 +19,21 @@ class TodoController extends Controller
         private readonly TodoService $todoService,
     ) {}
 
-    public function index()
+    public function index(TodoListRequestDto $request): Paginator
     {
-        //
+        $query = Todo::query();
+
+        if ($request->name) {
+            $query->where('name', 'like', '%'.$request->name.'%');
+        }
+
+        if ($request->status) {
+            $query->where('status', $request->status);
+        }
+
+        return $query
+            ->orderBy($request->sortField, $request->sortOrder->value)
+            ->simplePaginate($request->perPage, ['*'], 'page', $request->page);
     }
 
     public function store(CreateTodoDto $createTodoDto): Todo
