@@ -14,6 +14,11 @@ class Todo extends Model
      */
     const UPDATED_AT = null;
 
+    protected $attributes = [
+        'status' => TodoStatus::Pending,
+        'completed_at' => null,
+    ];
+
     /**
      * Get the attributes that should be cast.
      *
