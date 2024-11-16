@@ -45,4 +45,16 @@ class TodoService
 
         return $todo;
     }
+
+    public function destroy(int $id): bool
+    {
+        $todo = Todo::find($id);
+        if (null === $todo) {
+            return true;
+        }
+
+        $todo->delete();
+
+        return true;
+    }
 }

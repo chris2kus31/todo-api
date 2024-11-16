@@ -7,6 +7,8 @@ use App\Dto\UpdateTodoDto;
 use App\Models\Todo;
 use App\Services\TodoService;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class TodoController extends Controller
 {
@@ -34,9 +36,17 @@ class TodoController extends Controller
         return $this->todoService->update($id, $updateTodoDto);
     }
 
-    public function destroy(string $id)
+    public function destroy(int $id): JsonResponse
     {
-        //
+        try {
+            $this->todoService->destroy($id);
+
+            return response()->json(status: HttpResponse::HTTP_NO_CONTENT);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function analytics(Request $request)
