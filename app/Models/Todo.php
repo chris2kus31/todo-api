@@ -5,7 +5,8 @@ namespace App\Models;
 use App\Enums\TodoStatus;
 use Illuminate\Database\Eloquent\Model;
 
-class Todo extends Model {
+class Todo extends Model
+{
     /**
      * The name of the "updated at" column.
      *
