@@ -38,35 +38,3 @@ php artisan db:seed
 # To serve the APIs
 php artisan serve
 ```
-
-## Deployment & Release
-### Git branch naming convention & release workflow
-| Type        | Name                    | Example           | Clone From | Merge To             |
-|-------------|-------------------------|-------------------|------------|----------------------|
-| Production  | main                    | -                 | -          | -                    |
-| Development | dev                     | -                 | main       | -                    |
-| Feature     | feature/<feature-title> | feature/analytics | dev        | dev                  |
-| Release     | release/<version>       | release/1.0       | dev        | main, dev(for fixes) |
-| Hotfix      | hotfix/<hotfix-title>   | hotfix/fix-todo   | main       | main & dev           |
-
-<img src="./public/images/gitflow_workflow_diagram.png" alt="Git Workflow Diagram" width="600"/>
-
-For laravel deployment to server, follow [Deployment](https://laravel.com/docs/11.x/deployment).
-
-### Pre-commit checks
-```shell
-# For code standards and style issue fixing
-./vendor/bin/pint
-# To run tests
-php artisan test
-```
-
-For more information
-- [Laravel Pint](https://laravel.com/docs/11.x/pint)
-- [Testing](https://laravel.com/docs/11.x/testing)
-
-## Developers
-- **[Jitendra Yadav](mailto:jeetu.yadav28@gmail.com)**
-
-## Security Vulnerabilities
-NA
